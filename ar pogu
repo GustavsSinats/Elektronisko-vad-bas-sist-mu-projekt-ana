@@ -1,0 +1,90 @@
+/*void press_check(unsigned int ms)
+{
+  for (unsigned int i=1; i<ms; i++)
+  {
+    if (digitalRead(35)==0)
+    {
+      delay(1);
+    }
+    else (i == ms);
+  }
+}*/
+
+void setup() {
+  // put your setup code here, to run once:
+
+pinMode(25, OUTPUT);
+pinMode(26, OUTPUT);
+pinMode(27, OUTPUT);
+
+
+pinMode(35,INPUT);
+}
+
+bool button_check(unsigned long ms)
+{
+  for(unsigned long i = 0;i<ms;i++)
+  {
+    if (digitalRead(35) == 0)
+    {
+      delay(1);
+    }
+    if (digitalRead(35) == 1)
+    {
+      i = ms;
+      return true;
+    }
+  }
+  return false;
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+
+  static int mode=0;
+
+  switch(mode){
+  case 0:
+  {
+  digitalWrite(25, HIGH);
+  digitalWrite(26, LOW);
+  digitalWrite(27, LOW);
+  mode++;
+  }
+  break;
+
+  case 1:
+  {
+    digitalWrite(25, HIGH);
+    digitalWrite(26, HIGH);
+    digitalWrite(27, LOW);
+    mode++;
+  }
+  break;
+
+  case 2:
+  {
+    digitalWrite(25, LOW);
+    digitalWrite(26, LOW);
+    digitalWrite(27, HIGH);
+    mode++;
+  }
+  break;
+
+  case 3:
+  {
+    digitalWrite(25, LOW);
+    digitalWrite(26, HIGH);
+    digitalWrite(27, LOW);
+    mode=0;
+  }
+  break;
+  }
+  if (button_check(1000))
+  {
+    mode = 2;
+  }
+
+  
+}
