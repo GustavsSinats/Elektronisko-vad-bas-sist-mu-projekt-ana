@@ -1,0 +1,65 @@
+#include Lcd;
+#include  Lcd_constants;
+void RS0010_Init(unsigned char displayLines,
+unsigned char characterFont,
+unsigned char fontTable,
+unsigned char displayOnOff,
+unsigned char cursorOnOff,
+unsigned char cursorBlinkingOnOff,
+unsigned char incrementDecrement,
+unsigned char displayShift);
+
+enum pinConfig  {
+  signal_pin = 34,
+  DB0 = 15,
+  DB1 = 2,
+  DB2 = 0,
+  DB3 = 4,
+  DB4 = 16,
+  DB5 = 17,
+  DB6 = 5,
+  DB7 = 18,
+  contrast_pin = 999,
+};
+
+int readValue(int signal_pin) {
+  // volts to 1,655
+  return map(analogRead(signal_pin),0,1840,0,255);
+}
+
+void setDisplay(bool a, bool b, bool c, bool d, bool e, bool f, bool g, bool h)
+{
+  digitalWrite(DB0,a);
+  digitalWrite(DB1,b);
+  digitalWrite(DB2,c);
+  digitalWrite(DB3,d);
+  digitalWrite(DB4,e);
+  digitalWrite(DB5,f);
+  digitalWrite(DB6,g);
+  digitalWrite(DB7,h);
+}
+
+void display(int symbol) {
+  switch(symbol) {
+    case 0: setDisplay(1,1,1,1,1,1,1,1);
+    break;
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(signal_pin,INPUT);
+  characterFont;
+  displayOnOff=1;
+  cursorOnOff=1;
+  displayLines=2;
+
+}
+
+void loop() {
+  
+  readValue(signal_pin);
+  display(0);
+  Serial.println(readValue(signal_pin));
+
+}
