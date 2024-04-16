@@ -4,12 +4,12 @@ enum pinConfig  {
   signal_pin = 27,
   contrast_pin = 3,
 };
-
+/*
 int readValue(int signal_pin) {
   // volts to 1,655
-  return map(analogRead(signal_pin),0,1840,0,255);
+  return map(analogRead(signal_pin),0,1840,0,1570);
 }
-
+*/
 
 //Create An LCD Object. Signals: [ RS, EN, D4, D5, D6, D7 ]
 LiquidCrystal My_LCD(13, 33, 25, 26, 27, 14);
@@ -40,11 +40,19 @@ void setup()
 void loop()
 {
   //readValue(signal_pin);
-  int value = readValue(signal_pin);
-  //Serial.println(readValue(signal_pin));
-  My_LCD.print(value);
-  //My_LCD.setCursor(0, 2);
-  //My_LCD.print("mV");
+  int value = analogRead(signal_pin)/1.1238;
+  //Serial.println(value);
+  //My_LCD.print(value);
+  My_LCD.setCursor(0, 0);
+  My_LCD.print(value/1);
+  My_LCD.print(".");
+  My_LCD.print(value%1);
+
+
+
+  //My_LCD.print("Spriegums, V");
+  //My_LCD.setCursor(0, 1);
+  //My_LCD.print(value);
 
   delay(50);
   My_LCD.clear();
